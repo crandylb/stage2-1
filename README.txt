@@ -1,4 +1,4 @@
-README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Oct 11, 2013
+README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Oct 17, 2013
 
 The purpose of this directory is to illustrate creation of a first version of
 stage2 implemented via simcmp. Since simcmp is a simple macro processor with
@@ -26,6 +26,27 @@ makefile
 A default makefile for this directory to illustrate how its components can be
 processed and combined to build a working first (unoptimized) version of the
 Stage 2 macro processor.
+
+debug:
+This is the version of makefile used to build a debug version of stage2 for
+use with gdb (the Gnu debugging tool) or DDD (the graphical interface to gdb).
+Use:
+	make -f debug stage2.dbug.o
+To build a debug version of stage2 object file. Note the -g stabs option in
+the debug makefile that causes yasm to output the symbolic debugging
+information used by gdb.
+Use:
+	make -f debug stage2.dbug
+To build the debug executable of stage2. Note the -g option in the gcc command
+that causes the gcc linker to load the symbolic debugging info, and be sure to
+copy the grandios.dbug.o debug version of grandios from the grandios
+directory.
+Then use:
+	gdb stage2.dbug
+or
+	ddd stage2.dbug
+To run the debugging version. See the gdb or ddd documentation to setup the
+command line arguments for the input and output files for stage2.
 
 stage2.flb
 To create your own implementation of Stage 2 you obviously need your own copy
@@ -89,12 +110,11 @@ stage2.o
 This file is the object code output of the yasm assembler. It is created by:
    make stage2.o
 or by running yasm directly from the command line with:
-   yasm stage2.asm -w -l stage2.lst -f elf32 -g stabs -o stage2.o
+   yasm stage2.asm -w -l stage2.lst -f elf32 -o stage2.o
 Note the yasm option switches used here:
    -w -- inhibits warning messages, omit this if warnings will be useful to you
    -l stage2.lst -- produces the listing file described below
    -f elf32 -- produces object format for 32-bit x86 compatible with gcc -m32
-   -g stabs -- produces symbol table for debugging compatible with gdb and ddd
    -o stage2.o -- defines the name of the output file
 
 stage2.lst
@@ -108,11 +128,10 @@ This is the executable file for the Stage 2 macro processor, with debugging
 data included. It is produced using:
    make stage2
 or by invoking gcc directly from the command line:
-   gcc -m32 grandios.o stage2.o -g -o stage2
+   gcc -m32 grandios.o stage2.o -o stage2
 Note the option switches used here:
    -m32 -- produces a 32-bit executable file which works in either 32 or
    	   64-bit Linux systems using Intel or AMD x86 processors
-   -g --   produces a debug executable compatible with gdb or ddd
    -o stage2 -- defines the name of the output file
 Note that grandios.o, the I/O module, is linked before stage2.o and this order
 is necessary because of the way code and data segments are negotiated between
