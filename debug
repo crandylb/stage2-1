@@ -1,0 +1,21 @@
+# debug makefile -- for stage2-1 directory, CRB, Sep 14, 2013
+
+grandios.dbug.o:
+	echo "Copy grandios.dbug.o from the grandios directory"
+	echo "for example:"
+	echo "	  cp ../grandios/grandios.dbug.o ."
+
+stage2.scm:	flb2yasm.scm stage2.flb
+	cat flb2yasm.scm stage2.flb >stage2.scm
+
+stage2.asm:	stage2.scm
+	simcmp stage2.scm stage2.asm
+
+stage2.dbug.o:	stage2.asm
+	yasm stage2.asm -w -l stage2.lst -f elf32 -g stabs -o stage2.dbug.o
+
+stage2.dbug:		stage2.dbug.o grandios.dbug.o
+	gcc -m32 grandios.dbug.o stage2.dbug.o -g -o stage2.dbug
+
+testst2t:	stage2.dbug st2t.s2
+	./stage2.dbug st2t.s2 - st2t.3 st2t.4

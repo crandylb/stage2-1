@@ -1,4 +1,4 @@
-README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Jul 29, 2013
+README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Oct 11, 2013
 
 The purpose of this directory is to illustrate creation of a first version of
 stage2 implemented via simcmp. Since simcmp is a simple macro processor with
@@ -9,8 +9,10 @@ second optimized version: stage2-2.
 Contents of this directory:
 README.txt --	 this file
 makefile --	 used to build files with GNU make
+debug -- 	 version of makefile to build debug version for gdb
 flb2yasm.scm --	 marcos for simcmp to translate flb to yasm
 stage2.flb --	 source code for stage2 in flb (empty file, see below)
+getstg2.s2m --	 a set of stage2 macros to extract stage2 source from stage2.asm
 stage2.scm --	 flb2yasm.scm concatenated to stage2.flb for simcmp (empty)
 stage2.asm --	 stage2 translated to x86 assembly language by simcmp
 stage2.o --	 assembled object code for stage2 from yasm assembler
@@ -37,15 +39,29 @@ appropriate license, to reproduce the stage2 source code and other components
 of the Mobile Programming System here. In the meantime we will have to make do
 with work-arounds.
 
+getstg2.s2m
+This set of stage2 macros provides one of the work-arounds to obtain the
+source code for stage2 from the stage2.asm file. The flb source statements are
+embedded in stage2.asm as comments with a semicolon ";" in column one. The
+macros remove the semicolon and append a period "." on each comment line
+restoring the original stage2 algorithm. These macro can be run using the
+executable stage2 with this command line:
+     stage2 getstg2.s2m <stage2.asm - stg2raw.flb
+Use wc to verify that the output file stg2raw.flb has 985 lines beginning with
+"BEGIN STG2." and ending with "END PROGRAM." Rename stg2raw.flb to stage2.flb
+to build your own executable stage2 using make. This work-around provides a
+fully complete implementation of stage2 but the lack of explanatory comments
+will not make it easy to understand how it works.
+
 flb2yasm.scm
-This file is the set of simcmp macros to translate flb, also called first
-language under bootstrap, to x86 assembly language for the yasm assembler. I
-chose yasm (yet another assembler) because it is multi-pass and automatically
-optimizes conditional jumps to short or long form depending on the distance to
-the jump target location. The nasm (network assembler) formerly used was
-two-pass and did not support this feature. The optimized jumps greatly improve
-the speed and reduced size of the generated code. Because simcmp is a simple
-text substitution processor there are no other optimizations performed.
+This file is the set of simcmp macros to translate flb to x86 assembly
+language for the yasm assembler. I chose yasm (yet another assembler) because
+it is multi-pass and automatically optimizes conditional jumps to short or
+long form depending on the distance to the jump target location. The nasm
+(network assembler) formerly used was two-pass and did not support this
+feature. The optimized jumps greatly improve the speed and reduced size of the
+generated code. Because simcmp is a simple text substitution processor there
+are no other optimizations performed.
 
 stage2.scm
 This file is the concatenation of flb2yasm.scm and stage2.flb ready for input
@@ -113,7 +129,8 @@ stage2.flb
 There are several ways you can obtain the source code for Stage 2:
  1. Extract the comments from stage2.asm. Remove the leading semicolor ";" and
 append a period "." at the end of end each line. Verify that the result is 985
-lines beginning with "BEGIN STAGE2." to "END PROGRAM."
+lines beginning with "BEGIN STAGE2." to "END PROGRAM." See notes for the
+getstg2.s2m macros.
  2. See Waite's book Implementing Software for Non-Numeric Applications. A
 complete guide to Stage 2 is in Appendix A.
  3. An archive of an implementation of Stage 2 is contained in Volume 51 of the
