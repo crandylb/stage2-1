@@ -1,0 +1,29 @@
+|$|$0 (+-*/)	Filter to get Stage 2 source from stage2.asm, CRB, Aug 11, 2013
+; $ $ $ $ $ $ $|    capture every ';' comment line, append '.' and output
+$10 $20 $30 $40 $50 $60 $70. $F1|
+|
+; $ $ $ $ $ $|
+$10 $20 $30 $40 $50 $60. $F1|
+|
+; $ $ $ $ $|
+$10 $20 $30 $40 $50. $F1|
+|
+; $ $ $ $|
+$10 $20 $30 $40. $F1|
+|
+; $ $ $|
+$10 $20 $30. $F1|
+|
+; $ $|
+$10 $20. $F1|
+|
+; $|
+$10. $F1|
+|
+; END PROGRAM|	   end cleanly
+END PROGRAM. $F1|
+$F0|
+|
+$|		   capture everything else
+$10 $F10|	     and discard it
+||

@@ -1,4 +1,4 @@
-README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Oct 17, 2013
+README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Oct 19, 2013
 
 The purpose of this directory is to illustrate creation of a first version of
 stage2 implemented via simcmp. Since simcmp is a simple macro processor with
@@ -18,6 +18,7 @@ stage2.asm --	 stage2 translated to x86 assembly language by simcmp
 stage2.o --	 assembled object code for stage2 from yasm assembler
 stage2.lst --	 yasm listing file for stage2.asm, useful for debugging
 stage2 --  	 stage2 executable linked with grandios via gcc
+stage2pocketguide.odt -- summary reference for stage2 and flb
 
 README.txt
 Describes the contents of this directory and how its contents can be used.
@@ -180,3 +181,12 @@ Grandios has a very simple API to keep the interface to stage2 as simple as
 possible. You can use the compiled object module grandios.o to link with
 stage2.o, or compile your own from the source code files: grandios.c and
 grandios.h.
+
+stage2pocketguide.odt
+This is a summry reference guide for Stage 2. It contains a breakdown of the
+special characters on the flag line, which is the first line on input to Stage
+2; a summary of the 32 statement forms of flb, the first language under
+bootstrap; a summary of parameter conversions and processor functions used in
+Stage 2 macros; and a brief summary of the Stage 2 template matching
+algoritm. The pocket guide is still a work in progress and can expect to see
+additions and changes in format.
