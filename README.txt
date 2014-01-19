@@ -1,4 +1,5 @@
 README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Oct 19, 2013
+01/18/2014 CRB Add LICENSE
 
 The purpose of this directory is to illustrate creation of a first version of
 stage2 implemented via simcmp. Since simcmp is a simple macro processor with
@@ -19,6 +20,7 @@ stage2.o --	 assembled object code for stage2 from yasm assembler
 stage2.lst --	 yasm listing file for stage2.asm, useful for debugging
 stage2 --  	 stage2 executable linked with grandios via gcc
 stage2pocketguide.odt -- summary reference for stage2 and flb
+LICENSE		 GPLv2
 
 README.txt
 Describes the contents of this directory and how its contents can be used.
@@ -190,3 +192,7 @@ bootstrap; a summary of parameter conversions and processor functions used in
 Stage 2 macros; and a brief summary of the Stage 2 template matching
 algoritm. The pocket guide is still a work in progress and can expect to see
 additions and changes in format.
+
+LICENSE
+The GNU general public license applies to all files written by me except
+the source code for Stage 2 called stage2.flb here.
