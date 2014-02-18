@@ -1,6 +1,7 @@
 README.txt -- stage2-1 contains 1st version made via simcmp, CRB, Oct 19, 2013
 01/18/2014 CRB Add LICENSE
 01/27/2014 CRB Update stage2guide
+02/17/2014 CRB Update stage2.flb re Waite's reply
 
 The purpose of this directory is to illustrate creation of a first version of
 stage2 implemented via simcmp. Since simcmp is a simple macro processor with
@@ -13,7 +14,7 @@ README.txt --	 this file
 makefile --	 used to build files with GNU make
 debug -- 	 version of makefile to build debug version for gdb
 flb2yasm.scm --	 marcos for simcmp to translate flb to yasm
-stage2.flb --	 source code for stage2 in flb (empty file, see below)
+stage2.flb --	 source code for stage2 in flb (see below)
 getstg2.s2m --	 a set of stage2 macros to extract stage2 source from stage2.asm
 stage2.scm --	 flb2yasm.scm concatenated to stage2.flb for simcmp (empty)
 stage2.asm --	 stage2 translated to x86 assembly language by simcmp
@@ -55,29 +56,25 @@ command line arguments for the input and output files for stage2.
 
 stage2.flb
 To create your own implementation of Stage 2 you obviously need your own copy
-of the source code. Unfortunately that is not included here at the present
-time. There are several ways you can get it, although none of them are
-immediately convenient (see more below). Stage 2 was created by Professor
-William M. Waite in the late sixties at the University of Colorado. He is now
-retired (emeritus) but still has an office at CU Boulder (see
-ecce.colorado.edu/~waite). I have written to him requesting permission, and an
-appropriate license, to reproduce the stage2 source code and other components
-of the Mobile Programming System here. In the meantime we will have to make do
-with work-arounds.
+of the source code. Stage 2 was created by Professor William M. Waite in the
+late sixties at the University of Colorado. He is now retired (emeritus) but
+still has an office at CU Boulder (see ecce.colorado.edu/~waite). I have
+written to him requesting permission to reproduce the stage2 source code and
+other components of the Mobile Programming System here. He has graciously
+agreed, See his reply in full on my blog at crandylb.wordpress.com.
 
 getstg2.s2m
-This set of stage2 macros provides one of the work-arounds to obtain the
-source code for stage2 from the stage2.asm file. The flb source statements are
-embedded in stage2.asm as comments with a semicolon ";" in column one. The
-macros remove the semicolon and append a period "." on each comment line
-restoring the original stage2 algorithm. These macro can be run using the
-executable stage2 with this command line:
-     stage2 getstg2.s2m <stage2.asm - stg2raw.flb
-Use wc to verify that the output file stg2raw.flb has 985 lines beginning with
-"BEGIN STG2." and ending with "END PROGRAM." Rename stg2raw.flb to stage2.flb
-to build your own executable stage2 using make. This work-around provides a
-fully complete implementation of stage2 but the lack of explanatory comments
-will not make it easy to understand how it works.
+This set of stage2 macros provides one way to obtain the source code for
+stage2 from the stage2.asm file. The flb source statements are embedded in
+stage2.asm as comments with a semicolon ";" in column one. The macros remove
+the semicolon and append a period "." on each comment line restoring the
+original stage2 algorithm. These macro can be run using the executable stage2
+with this command line: stage2 getstg2.s2m <stage2.asm - stg2raw.flb Use wc to
+verify that the output file stg2raw.flb has 985 lines beginning with "BEGIN
+STG2." and ending with "END PROGRAM." Rename stg2raw.flb to stage2.flb to
+build your own executable stage2 using make. This work-around provides a fully
+complete implementation of stage2 but the lack of explanatory comments will
+not make it easy to understand how it works.
 
 flb2yasm.scm
 This file is the set of simcmp macros to translate flb to x86 assembly
@@ -95,8 +92,6 @@ to simcmp. It is created by:
    make stage2.scm
 or simply by using cat on the command line:
    cat flb2yasm.scm stage2.flb >stage2.scm
-This file is currently empty because we do not (as yet) have permission to
-provide stage2.flb.
 
 stage2.asm
 This file is the output of simcmp when it translates the stage2 source to x86
@@ -104,12 +99,6 @@ assembly language by:
    make stage2.asm
 or, as you can see examining makefile, by running simcmp from the command line:
    simcmp stage2.scm stage2.asm
-This file, stage2.asm, happens to contain the flb source code for stage2 as
-embedded comments. Each comment begins with a semicolon character ";" in the
-first column. So it is possible in principle to extract and reconstruct the 
-source code for stage2 from this file, although it will not be very
-informative because none of the explanatory comments from the original stage2
-source will be included.
 
 stage2.o
 This file is the object code output of the yasm assembler. It is created by:
@@ -150,24 +139,10 @@ simcmp --     executable implementation of the Simple Compiler
 grandios.o -- compiled object code of the I/O system and wrapper for stage2
 
 stage2.flb
-There are several ways you can obtain the source code for Stage 2:
- 1. Extract the comments from stage2.asm. Remove the leading semicolor ";" and
-append a period "." at the end of end each line. Verify that the result is 985
-lines beginning with "BEGIN STAGE2." to "END PROGRAM." See notes for the
-getstg2.s2m macros.
- 2. See Waite's book Implementing Software for Non-Numeric Applications. A
-complete guide to Stage 2 is in Appendix A.
- 3. An archive of an implementation of Stage 2 is contained in Volume 51 of the
-CP/M User Group. Google for cpmug051.ark to find a download mirror such as:
-http://www.classiccmp.org/cpmarchives/cpm/mirrors/oak.oakland.edu/pub/cpmug/
-This implementation is for Intel 8080 microprocessors running the CP/M
-operating system. The .ark archive file can be unpacked with pkunpak.exe which
-can be run under the MSDOS emulator dosemu in Linux. The Stage 2 source file
-is stg2.flb. The pkunpak utility can be found at:
-http://www.filewatcher.com/_/?q=pkunpak
- 4. Write to Professor Waite or the University of Colorado ECEE Department and
-ask for Stage 2 or the Mobile Programming System. That's how I got a copy on
-7-track magnetic tape in 1970.
+This is my version of the source code for the Stage 2 macro processor retyped
+from Waite's text [1]. It is used here by permission from Prof. Waite and by
+his declaration that Stage 2 and the Mobile Programming System are released to
+the Public Domain. See my blog [2] for the full particulars.
 
 simcmp
 See the simcomp directory for an executable of the Simple Compiler. Or compile
@@ -197,3 +172,8 @@ algoritm. The .pdf version may work better for printing in landscape mode.
 LICENSE
 The GNU general public license applies to all files written by me except
 the source code for Stage 2 called stage2.flb here.
+
+References
+[1] William M. Waite, Implementing Software for Non-Numeric Applications,
+    1973. 
+[2] Companion Blog at crandylb.wordpress.com.
